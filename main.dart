@@ -9,31 +9,81 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Container> kotak = List.generate(50, (index) {
-      return Container(
-        color: const Color.fromRGBO(221, 160, 221, 20),
-      );
-    });
     return MaterialApp(
-        title: 'grid view',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text("Sulpiana"),
-          ),
-          body: GridView(
-            padding: const EdgeInsets.all(5),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 10,
-              childAspectRatio: 4 / 4,
-            ),
-            children: kotak,
-          ),
-        ));
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Home(),
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _currentIndex = 0;
+
+  final tabs = [
+    Center(
+        child: Text(
+      'Home',
+      style: TextStyle(fontSize: 25),
+    )),
+    Center(
+        child: Text(
+      'Camera',
+      style: TextStyle(fontSize: 25),
+    )),
+    Center(
+        child: Text(
+      'Pesan',
+      style: TextStyle(fontSize: 25),
+    )),
+    Center(
+        child: Text(
+      'Personal',
+      style: TextStyle(fontSize: 25),
+    )),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sulpiana'),
+        backgroundColor: Color.fromARGB(255, 71, 129, 177),
+      ),
+      body: tabs[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Color.fromARGB(255, 71, 129, 177)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.camera), //255, 176, 87,
+              label: 'Camera',
+              backgroundColor: Color.fromARGB(206, 24, 173, 149)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.message),
+              label: 'Pesan',
+              backgroundColor: Color.fromARGB(206, 189, 119, 28)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.face),
+              label: 'Personal',
+              backgroundColor: Color.fromARGB(255, 176, 87, 199)),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+    );
   }
 }
